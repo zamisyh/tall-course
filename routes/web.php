@@ -5,6 +5,9 @@ use App\Http\Livewire\Client\Home;
 use App\Http\Livewire\Client\Series;
 use App\Http\Livewire\Client\Popular;
 use App\Http\Livewire\Client\Topics;
+use App\Http\Livewire\Client\Auth\Signin;
+use App\Http\Livewire\Client\Auth\Signup;
+use App\Http\Livewire\Tes;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +25,13 @@ Route::name('client.')->group(function() {
     Route::get('series', Series::class)->name('series');
     Route::get('topics', Topics::class)->name('topics');
     Route::get('popular', Popular::class)->name('popular');
+
+    Route::prefix('auth')->group(function () {
+        Route::name('auth.')->group(function() {
+            Route::get('signin', Signin::class)->name('signin');
+            Route::get('signup', Signup::class)->name('signup');
+        });
+    });
 });
+
+Route::get('tes', Tes::class);
