@@ -7,6 +7,8 @@ use App\Http\Livewire\Client\Popular;
 use App\Http\Livewire\Client\Topics;
 use App\Http\Livewire\Client\Auth\Signin;
 use App\Http\Livewire\Client\Auth\Signup;
+use App\Http\Livewire\Dashboard\AdminAuthor\Home as HomeAdmin;
+use App\Http\Livewire\Dashboard\Users\Home as HomeUser;
 use App\Http\Livewire\Tes;
 
 /*
@@ -32,6 +34,26 @@ Route::name('client.')->group(function() {
             Route::get('signup', Signup::class)->name('signup');
         });
     });
+});
+
+Route::prefix('dashboard')->group(function () {
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::prefix('admin')->group(function () {
+            Route::name('dashboard.admin.')->group(function() {
+                Route::get('/', HomeAdmin::class)->name('home');
+            });
+        });
+    });
+
+    Route::middleware(['role:user'])->group(function () {
+        Route::prefix('user')->group(function () {
+            Route::name('dashboard.user.')->group(function() {
+                Route::get('/', HomeUser::class)->name('home');
+            });
+        });
+    });
+
 });
 
 Route::get('tes', Tes::class);
