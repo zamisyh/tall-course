@@ -31,4 +31,32 @@
         </div>
     </div>
 
+    @if ($isLogin)
+        <script>
+            setTimeout(function () {
+                window.location.href = "{{ route('dashboard.user.home') }}";
+            }, 3000);
+        </script>
+
+    @elseif ($isLoginAdmin)
+        <script>
+            setTimeout(function () {
+                window.location.href = "{{ route('dashboard.admin.home') }}";
+            }, 3000);
+        </script>
+    @endif
+
+    @if (Auth::check())
+        @if ($isLogin)
+            <script>
+                window.location.href = "{{ route('dashboard.user.home') }}";
+            </script>
+
+        @elseif ($isLoginAdmin)
+            <script>
+                window.location.href = "{{ route('dashboard.admin.home') }}";
+            </script>
+        @endif
+    @endif
+
 </div>

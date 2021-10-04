@@ -39,13 +39,26 @@
                             </svg>
                         </div>
                         <ul x-show="search" tabindex="0" class="p-2 mt-10 text-black shadow-lg menu dropdown-content bg-base-100 rounded-box w-52">
+                           @if (Auth::check())
+                            <li>
+                                @if (Auth::user()->getRoleNames()[0] === 'admin'
+                                || Auth::user()->getRoleNames()[0] === 'author')
+                                    <a href="{{ route('dashboard.admin.home') }}">Dashbord</a>
+                                @elseif (Auth::user()->getRoleNames()[0] === 'user')
+                                    <a href="{{ route('dashboard.user.home') }}">Dashbord</a>
+                                @endif
+                            </li>
+                            <li>
+                                <a wire:click='logout'>Logout</a>
+                            </li>
+                           @else
                             <li>
                                 <a href="{{ route('client.auth.signin') }}">Sign In</a>
                             </li>
                             <li>
                                 <a href="{{ route('client.auth.signup') }}">Sign Up</a>
                             </li>
-
+                           @endif
                         </ul>
                       </div>
                     </div>
