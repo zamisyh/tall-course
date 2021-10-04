@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class Signin extends Component
 {
 
-    public $email, $password;
+    public $email, $password, $isLogin, $isLoginAdmin;
 
     public function render()
     {
@@ -37,6 +37,14 @@ class Signin extends Component
                         'showCancelButton' =>  false,
                         'showConfirmButton' =>  false,
                 ]);
+
+                if (Auth::user()->getRoleNames()[0] === 'admin'
+                || Auth::user()->getRoleNames()[0] === 'author') {
+                    $this->isLoginAdmin = true;
+                }else{
+                    $this->isLogin = true;
+                }
+
            }else{
                 $this->alert('error', 'Invalid your credential', [
                     'position' =>  'top-end',

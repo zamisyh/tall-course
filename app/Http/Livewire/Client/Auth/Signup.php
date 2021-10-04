@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Client\Auth;
 
 use Livewire\Component;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class Signup extends Component
 {
@@ -19,17 +20,20 @@ class Signup extends Component
     {
         $this->validate([
             'name' => 'required|min:4',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'confirm_password' => 'required|same:password'
         ]);
 
         try {
-            User::create([
+            $user = User::create([
                 'name' => $this->name,
                 'email' => $this->email,
                 'password' => bcrypt($this->password)
             ]);
+
+            $user->assignRole('user');
+            $this->reset();
 
             $this->alert('success', 'Succesfully created user', [
                 'position' =>  'top-end',
