@@ -9,7 +9,9 @@ use App\Http\Livewire\Client\Auth\Signin;
 use App\Http\Livewire\Client\Auth\Signup;
 use App\Http\Livewire\Dashboard\AdminAuthor\Home as HomeAdmin;
 use App\Http\Livewire\Dashboard\Users\Home as HomeUser;
+use App\Http\Livewire\Dashboard\AdminAuthor\Admin\Author;
 use App\Http\Livewire\Tes;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +42,12 @@ Route::prefix('dashboard')->group(function () {
 
     Route::middleware(['role:admin'])->group(function () {
         Route::prefix('admin')->group(function () {
+
             Route::name('dashboard.admin.')->group(function() {
                 Route::get('/', HomeAdmin::class)->name('home');
+                Route::get('author', Author::class)->name('author');
             });
+
         });
     });
 

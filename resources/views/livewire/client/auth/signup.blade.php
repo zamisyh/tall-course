@@ -1,4 +1,8 @@
 <div>
+
+    @section('title')
+        Coursemy - Sign Up Page
+    @endsection
     @livewire('components.client.navbar')
 
 
