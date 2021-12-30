@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c257947361602ad13742365ed03c16cd",
+    "content-hash": "4447f268eca7d8011d448c98efd64f8d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -876,6 +876,65 @@
                 "source": "https://github.com/guzzle/psr7/tree/2.0.0"
             },
             "time": "2021-06-30T20:03:07+00:00"
+        },
+        {
+            "name": "imanghafoori/laravel-video",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imanghafoori1/laravel-video.git",
+                "reference": "960579f1e43ff1356807ece2eda52848210dc4aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imanghafoori1/laravel-video/zipball/960579f1e43ff1356807ece2eda52848210dc4aa",
+                "reference": "960579f1e43ff1356807ece2eda52848210dc4aa",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.1|6.*|7.*|8.*",
+                "php": "7.2.*|7.3.*|7.4.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.9",
+                "orchestra/testbench": "~3.0"
+            },
+            "suggest": {
+                "imanghafoori/laravel-anypass": " Allows you login with any password in local environment.",
+                "imanghafoori/laravel-decorator": "Allows you to easily apply the decorator pattern.",
+                "imanghafoori/laravel-heyman": "It allows to write expressive code to authorize, validate and authenticate.",
+                "imanghafoori/laravel-masterpass": "You can easily set a master password without code change.",
+                "imanghafoori/laravel-terminator": "Gives you opportunity to refactor your controllers."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Iman\\Streamer\\StreamServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Iman\\Streamer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Iman Ghafoori",
+                    "email": "imanghafoori1@gmail.com"
+                }
+            ],
+            "description": "A laravel package to stream video content.",
+            "support": {
+                "issues": "https://github.com/imanghafoori1/laravel-video/issues",
+                "source": "https://github.com/imanghafoori1/laravel-video/tree/v2.1.1"
+            },
+            "time": "2020-09-16T02:08:10+00:00"
         },
         {
             "name": "jantinnerezo/livewire-alert",
@@ -8304,5 +8363,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
