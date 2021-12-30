@@ -10,6 +10,10 @@ use App\Http\Livewire\Client\Auth\Signup;
 use App\Http\Livewire\Dashboard\AdminAuthor\Home as HomeAdmin;
 use App\Http\Livewire\Dashboard\Users\Home as HomeUser;
 use App\Http\Livewire\Dashboard\AdminAuthor\Admin\Author;
+use App\Http\Livewire\Dashboard\AdminAuthor\Author\Course;
+use Iman\Streamer\VideoStreamer;
+
+
 use App\Http\Livewire\Tes;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,16 +44,23 @@ Route::name('client.')->group(function() {
 
 Route::prefix('dashboard')->group(function () {
 
-    Route::middleware(['role:admin'])->group(function () {
-        Route::prefix('admin')->group(function () {
-
-            Route::name('dashboard.admin.')->group(function() {
+    Route::prefix('admin')->group(function () {
+        Route::name('dashboard.admin.')->group(function() {
+            Route::middleware(['role:admin|author'])->group(function () {
                 Route::get('/', HomeAdmin::class)->name('home');
+            });
+
+            Route::middleware(['role:admin'])->group(function () {
                 Route::get('author', Author::class)->name('author');
             });
 
+            Route::middleware(['role:author'])->group(function () {
+                Route::get('course', Course::class)->name('author.course');
+            });
         });
+
     });
+
 
     Route::middleware(['role:user'])->group(function () {
         Route::prefix('user')->group(function () {
@@ -61,4 +72,3 @@ Route::prefix('dashboard')->group(function () {
 
 });
 
-Route::get('tes', Tes::class);

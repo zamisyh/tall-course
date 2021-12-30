@@ -36,8 +36,7 @@
                    <div class="flex">
                     <input wire:model='search' type="text" class="mb-4 input input-bordered" placeholder="Searching..">
                     <div wire:loading wire:target='search' class="w-12 h-12 ml-5 border-t-2 border-b-2 border-purple-500 rounded-full animate-spin"></div>
-
-                </div>
+                 </div>
 
                     <select wire:model='rows' class="mb-2 select select-bordered">
                         <option value="5">5</option>
@@ -45,9 +44,6 @@
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="25">25</option>
-
-
-
                     </select>
                 </div>
                 <div>
