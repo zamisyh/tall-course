@@ -40,7 +40,7 @@
             </li>
             <hr>
             <li>
-              <a>Profile</a>
+              <a href="{{ route('dashboard.admin.author.profile') }}">Profile</a>
             </li>
             <li>
               <a>Settings</a>
