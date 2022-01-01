@@ -18,8 +18,8 @@ class CreateSeriesTable extends Migration
             $table->unsignedBigInteger('author_id');
             $table->string('title');
             $table->string('slug');
-            $table->string('description');
-            $table->string('image');
+            $table->text('description');
+            $table->text('image');
             $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
 
             $table->timestamps();

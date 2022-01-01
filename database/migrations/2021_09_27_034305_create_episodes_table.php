@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
 class CreateEpisodesTable extends Migration
 {
     /**
@@ -17,7 +16,7 @@ class CreateEpisodesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('series_id');
             $table->string('lectures');
-            $table->string('description');
+            $table->text('description');
             $table->string('link');
             $table->string('time');
             $table->string('section');
