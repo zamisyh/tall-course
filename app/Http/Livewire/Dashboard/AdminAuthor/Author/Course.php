@@ -34,9 +34,7 @@ class Course extends Component
     public function mount()
     {
         $this->authorId = Author::where('user_id', Auth::user()->id)->pluck('id');
-
     }
-
 
     public function render()
     {
@@ -44,11 +42,11 @@ class Course extends Component
 
         if ($this->search) {
             $data['data']['course'] = Series::where('title', 'LIKE', '%' . ucwords(strtolower($this->search)) . '%')
-                            ->where('author_id', $this->authorId[0])
+                            ->where('author_id', empty($this->authorId[0]) ? null : $this->authorId[0])
                             ->orderBy('created_at', 'DESC')
                             ->paginate($this->rows);
         }else{
-           $data['data']['course']=  Series::where('author_id', $this->authorId[0])
+           $data['data']['course']=  Series::where('author_id', empty($this->authorId[0]) ? null : $this->authorId[0])
                             ->orderBy('created_at', 'DESC')
                             ->paginate($this->rows);
         }

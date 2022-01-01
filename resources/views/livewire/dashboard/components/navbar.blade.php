@@ -30,7 +30,11 @@
           <button class="btn btn-square btn-ghost" @click="nav = !nav">
             <div class="avatar">
                 <div class="w-10 h-10 m-1 rounded-full">
-                  <img src="https://i.pravatar.cc/500?img=32">
+                  @if (!empty($profileImage[0]))
+                    <img src="{{ asset('storage/images/author/profile/' . $profileImage[0]) }}">
+                  @else
+                    <img src="https://i.pravatar.cc/500?img=32">
+                  @endif
                 </div>
               </div>
           </button>

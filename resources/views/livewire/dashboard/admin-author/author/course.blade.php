@@ -6,9 +6,8 @@
 
     <div class="drawer-content" x-data="{ drawer: false }">
 
-        @livewire('dashboard.components.navbar')
-        @include('livewire.dashboard.components.drawer')
-
+      @livewire('dashboard.components.navbar')
+      @include('livewire.dashboard.components.drawer')
 
        <div class="px-5 mt-10" :class="{ 'lg:ml-80 lg:p-5 md:ml-80 md:p-5': drawer }">
             <div class="flex flex-wrap justify-between">
