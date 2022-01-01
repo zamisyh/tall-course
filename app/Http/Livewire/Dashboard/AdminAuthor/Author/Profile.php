@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class Profile extends Component
 {
@@ -62,6 +63,8 @@ class Profile extends Component
                     'image' => $nameFile
                 ]
             );
+
+            User::where('id', Auth::user()->id)->update(['status' => true]);
 
         $this->alert(
             'success',
