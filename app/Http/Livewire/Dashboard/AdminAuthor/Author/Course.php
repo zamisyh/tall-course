@@ -139,6 +139,9 @@ class Course extends Component
         );
     }
 
-
+    public function editSeries($id)
+    {
+        dd(true);
+    }
 
 }
