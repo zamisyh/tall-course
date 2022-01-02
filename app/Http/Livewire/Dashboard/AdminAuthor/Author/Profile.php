@@ -8,13 +8,15 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class Profile extends Component
 {
 
     use WithFileUploads;
 
-    public $name, $about, $work, $image, $dataAuthor;
+    public $name, $about, $work, $image, $dataAuthor, $img;
+
 
 
     public function mount()
@@ -26,10 +28,13 @@ class Profile extends Component
            $this->about = $this->dataAuthor->about;
            $this->image = $this->dataAuthor->image;
         }
+
+
     }
 
     public function render()
     {
+
         return view('livewire.dashboard.admin-author.author.profile')->extends('layouts.app')->section('content');
     }
 
@@ -42,17 +47,24 @@ class Profile extends Component
 
     public function updateProfile()
     {
+
+        $newImage = null;
         $this->validate([
             'name' => 'required',
             'work' => 'required',
             'about' => 'required',
             'image' => 'required'
         ]);
-        try {
-            $nameFile = Str::slug(strtolower($this->name)). '-' . time(). '.' . $this->image->getClientOriginalExtension();
-            $path = 'public/images/author/profile';
 
-            $this->image->storeAs($path, $nameFile);
+        try {
+
+            if (is_null($this->img)) {
+                $newImage = $this->img = $this->image;
+            }else{
+                $newImage = Str::slug(strtolower($this->name)). '-' . time(). '.' . $this->img->getClientOriginalExtension();
+                File::delete(public_path('storage/images/author/profile/' . $this->image));
+                $this->img->storeAs('public/images/author/profile', $newImage);
+            }
 
             $author = Author::updateOrCreate(
                 [ 'user_id' => Auth::user()->id ],
@@ -60,7 +72,7 @@ class Profile extends Component
                     'name' => $this->name,
                     'about' => $this->about,
                     'work' => $this->work,
-                    'image' => $nameFile
+                    'image' => $newImage
                 ]
             );
 
@@ -75,5 +87,7 @@ class Profile extends Component
             dd($e->getMessage());
         }
     }
+
+
 
 }

@@ -59,12 +59,16 @@
                 </div>
                 <div class="form-control">
                     <label class="mb-1 text-md">Image</label>
-                    <input wire:model='image' type="file" class="w-full @error('image')
+                    <input wire:model='img' type="file" class="w-full @error('img')
                             input-error
                     @enderror" placeholder="Input your name">
-                    @error('image')
+                    @error('img')
                         <span class="text-red-700">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <div class="mt-3 mb-2">
+                    <img style="width: 100px; height:100px;" src="{{ asset('storage/images/author/profile/' . $image) }}" alt="image">
                 </div>
 
                 <div class="mt-5 mb-3">
