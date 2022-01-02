@@ -11,7 +11,7 @@ class Settings extends Component
 {
 
     public $old_password, $new_password, $confirm_password, $user_id, $pass;
-
+    public $show_password;
 
     public function mount()
     {
