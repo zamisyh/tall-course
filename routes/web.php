@@ -12,6 +12,7 @@ use App\Http\Livewire\Dashboard\Users\Home as HomeUser;
 use App\Http\Livewire\Dashboard\AdminAuthor\Admin\Author;
 use App\Http\Livewire\Dashboard\AdminAuthor\Author\Course;
 use App\Http\Livewire\Dashboard\AdminAuthor\Author\Profile;
+use App\Http\Livewire\Dashboard\Settings;
 use Iman\Streamer\VideoStreamer;
 
 
@@ -60,8 +61,9 @@ Route::prefix('dashboard')->group(function () {
                 Route::get('profile', Profile::class)->name('author.profile');
             });
         });
-
     });
+
+    Route::get('settings', Settings::class)->name('dashboard.settings');
 
 
     Route::middleware(['role:user'])->group(function () {

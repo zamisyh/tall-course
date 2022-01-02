@@ -16,9 +16,6 @@
                 Coursemy
           </span>
         </div>
-
-
-
         <div class="flex-none">
           <button class="btn btn-square btn-ghost">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
@@ -43,11 +40,13 @@
                 <a>{{ ucwords(strtolower(Auth::user()->name)) }}</a>
             </li>
             <hr>
+            @role('author|users')
             <li>
-              <a href="{{ route('dashboard.admin.author.profile') }}">Profile</a>
+                <a href="{{ route('dashboard.admin.author.profile') }}">Profile</a>
             </li>
+            @endrole
             <li>
-              <a>Settings</a>
+              <a href="{{ route('dashboard.settings') }}">Settings</a>
             </li>
             <li>
               <a wire:click='logout'>Logout</a>
