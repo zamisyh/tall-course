@@ -185,4 +185,9 @@ class Course extends Component
     {
         $this->reset('title', 'img', 'description');
     }
+
+    public function editEpisode($id)
+    {
+        dd($id);
+    }
 }
