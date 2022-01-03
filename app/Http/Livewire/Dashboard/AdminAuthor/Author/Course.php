@@ -143,6 +143,7 @@ class Course extends Component
         $this->title = $data->title;
         $this->description = $data->description;
         $this->image = $data->image;
+
     }
 
     public function updateSeries($id)
@@ -163,10 +164,10 @@ class Course extends Component
         }
 
         $data->image = $newImage;
-
         $data->update();
 
         $this->closeModal = true;
+        $this->reset('title', 'description', 'img');
 
         $this->alert(
             'success',
@@ -180,4 +181,8 @@ class Course extends Component
         $this->closeModal = false;
     }
 
+    public function clearForm()
+    {
+        $this->reset('title', 'img', 'description');
+    }
 }

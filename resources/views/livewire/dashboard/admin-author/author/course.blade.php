@@ -47,7 +47,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="my-modal-2" class="mb-4 btn btn-primary modal-button">Create Series</label>
+                    <label x-on:click='$wire.clearForm' for="my-modal-2" class="mb-4 btn btn-primary modal-button">Create Series</label>
                     <input type="checkbox" id="my-modal-2" class="modal-toggle">
                     <div class="modal">
                         <div class="modal-box">
