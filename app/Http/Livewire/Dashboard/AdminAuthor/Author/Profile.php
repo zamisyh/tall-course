@@ -38,7 +38,7 @@ class Profile extends Component
         return view('livewire.dashboard.admin-author.author.profile')->extends('layouts.app')->section('content');
     }
 
-    public function updatedImage()
+    public function updatedImg()
     {
         $this->validate([
             'img' => 'file|mimes:png,jpg,jpeg,webp|max:1024'

@@ -27,7 +27,7 @@ class Course extends Component
     ];
 
     public $isSaved, $rows = 5, $search;
-    public $title, $description, $image;
+    public $title, $description, $image, $img;
     public $userIdDelete, $closeModal, $authorId, $seriesId;
 
 
@@ -139,7 +139,45 @@ class Course extends Component
 
     public function editSeries($id)
     {
-        dd(true);
+        $data = Series::findOrFail($id);
+        $this->title = $data->title;
+        $this->description = $data->description;
+        $this->image = $data->image;
+    }
+
+    public function updateSeries($id)
+    {
+
+        $newImage = null;
+        $data = Series::findOrFail($id);
+        $data->title = $this->title;
+        $data->description = $this->description;
+
+        if (is_null($this->img)) {
+            $newImage = $this->img = $data->image;
+
+        }else{
+            $newImage = Str::slug(strtolower($this->title)). '-' . time(). '.' . $this->img->getClientOriginalExtension();
+            File::delete(public_path('storage/images/course/thumbnail/' . $data->image));
+            $this->img->storeAs('public/images/course/thumbnail', $newImage);
+        }
+
+        $data->image = $newImage;
+
+        $data->update();
+
+        $this->closeModal = true;
+
+        $this->alert(
+            'success',
+            'Succesfully update series'
+        );
+
+    }
+
+    public function close()
+    {
+        $this->closeModal = false;
     }
 
 }
