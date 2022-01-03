@@ -30,7 +30,7 @@
                   @if (!empty($profileImage[0]))
                     <img src="{{ asset('storage/images/author/profile/' . $profileImage[0]) }}">
                   @else
-                    <img src="https://i.pravatar.cc/500?img=32">
+                    <img src="{{ asset('500.jpeg') }}">
                   @endif
                 </div>
               </div>

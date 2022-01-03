@@ -68,7 +68,11 @@
                 </div>
 
                 <div class="mt-3 mb-2">
-                    <img style="width: 100px; height:100px;" src="{{ asset('storage/images/author/profile/' . $image) }}" alt="image">
+                    @if (is_null($image))
+                        <img style="width: 100px; height:100px;" src="{{ asset('500.jpeg') }}" alt="image">
+                    @else
+                        <img style="width: 100px; height:100px;" src="{{ asset('storage/images/author/profile/' . $image) }}" alt="image">
+                    @endif
                 </div>
 
                 <div class="mt-5 mb-3">

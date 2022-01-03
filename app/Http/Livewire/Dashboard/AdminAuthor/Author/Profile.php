@@ -29,7 +29,7 @@ class Profile extends Component
            $this->image = $this->dataAuthor->image;
         }
 
-
+        // Author::where('user_id', Auth::user()->id)->delete();
     }
 
     public function render()
@@ -41,32 +41,34 @@ class Profile extends Component
     public function updatedImage()
     {
         $this->validate([
-            'image' => 'file|mimes:png,jpg,jpeg,webp|max:1024'
+            'img' => 'file|mimes:png,jpg,jpeg,webp|max:1024'
         ]);
     }
 
     public function updateProfile()
     {
-
         $newImage = null;
         $this->validate([
             'name' => 'required',
             'work' => 'required',
             'about' => 'required',
-            'image' => 'required'
+            'img' => 'required'
         ]);
 
         try {
 
+
             if (is_null($this->img)) {
                 $newImage = $this->img = $this->image;
+
             }else{
                 $newImage = Str::slug(strtolower($this->name)). '-' . time(). '.' . $this->img->getClientOriginalExtension();
                 File::delete(public_path('storage/images/author/profile/' . $this->image));
                 $this->img->storeAs('public/images/author/profile', $newImage);
             }
 
-            $author = Author::updateOrCreate(
+
+            Author::updateOrCreate(
                 [ 'user_id' => Auth::user()->id ],
                 [
                     'name' => $this->name,
@@ -78,15 +80,16 @@ class Profile extends Component
 
             User::where('id', Auth::user()->id)->update(['status' => true]);
 
-        $this->alert(
-            'success',
-            'Succesfully update your profile'
-        );
+            $this->alert(
+                'success',
+                'Succesfully update your profile'
+            );
 
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
     }
+
 
 
 
