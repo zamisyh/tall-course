@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dashboard\AdminAuthor\Author;
 
 use App\Models\Author;
+use App\Models\Section;
 use App\Models\Series;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,13 +23,16 @@ class Course extends Component
     protected $paginationTheme = 'tailwind';
 
     protected $listeners = [
-        'confirmed',
-        'canceled'
+        'confirmed', 'canceled',
+        'sectionAdded'
     ];
 
-    public $isSaved, $rows = 5, $search, $isOpenDetailForm;
+    public $isSaved, $rows = 5, $search, $isOpenDetailForm, $isOpenAddEpisode;
     public $title, $description, $image, $img, $short_description, $language, $requirements, $course_for;
     public $userIdDelete, $closeModal, $authorId, $seriesId;
+
+    //episodes
+    public $isOpenFormAddSection, $data_section, $data_series, $form_add_new_section;
 
 
     public function mount()
@@ -207,6 +211,22 @@ class Course extends Component
 
     public function editEpisode($id)
     {
-        dd($id);
+        $this->isOpenAddEpisode = true;
+        $this->data_series = Series::findOrFail($id);
+        $this->dynamicSection();
+
     }
+
+    public function dynamicSection()
+    {
+        $this->data_section = Section::where('series_id', $this->data_series->id)
+        ->orderBy('created_at', 'ASC')->get();
+    }
+
+    public function sectionAdded()
+    {
+        $this->dynamicSection();
+    }
+
+
 }
