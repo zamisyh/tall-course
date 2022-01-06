@@ -26,8 +26,8 @@ class Course extends Component
         'canceled'
     ];
 
-    public $isSaved, $rows = 5, $search;
-    public $title, $description, $image, $img;
+    public $isSaved, $rows = 5, $search, $isOpenDetailForm;
+    public $title, $description, $image, $img, $short_description, $language, $requirements, $course_for;
     public $userIdDelete, $closeModal, $authorId, $seriesId;
 
 
@@ -67,6 +67,10 @@ class Course extends Component
         $this->validate([
             'title' => 'required',
             'description' => 'required',
+            'language' => 'required',
+            'course_for' => 'required',
+            'requirements' => 'required',
+            'short_description' => 'required',
             'image' => 'required'
         ]);
 
@@ -93,6 +97,10 @@ class Course extends Component
                     'description' => $this->description,
                     'author_id' => $this->authorId[0],
                     'slug' => Str::slug(strtolower($this->title)),
+                    'requirements' => $this->requirements,
+                    'course_for' => $this->course_for,
+                    'language' => $this->language,
+                    'short_description' => $this->short_description,
                     'image' => $namaFile
                 ]);
 
@@ -100,6 +108,8 @@ class Course extends Component
                     'success',
                     'Succesfully create course'
                 );
+
+                $this->clearForm();
             }
 
         } catch (\Exception $e) {
@@ -143,6 +153,11 @@ class Course extends Component
         $this->title = $data->title;
         $this->description = $data->description;
         $this->image = $data->image;
+        $this->language = $data->language;
+        $this->short_description = $data->short_description;
+        $this->course_for = $data->course_for;
+        $this->requirements = $data->requirements;
+
 
     }
 
@@ -153,6 +168,10 @@ class Course extends Component
         $data = Series::findOrFail($id);
         $data->title = $this->title;
         $data->description = $this->description;
+        $data->short_description = $this->short_description;
+        $data->course_for = $this->course_for;
+        $data->requirements = $this->requirements;
+        $data->language = $this->language;
 
         if (is_null($this->img)) {
             $newImage = $this->img = $data->image;
@@ -183,7 +202,7 @@ class Course extends Component
 
     public function clearForm()
     {
-        $this->reset('title', 'img', 'description');
+        $this->reset('title', 'img', 'description', 'requirements', 'course_for', 'short_description', 'language');
     }
 
     public function editEpisode($id)

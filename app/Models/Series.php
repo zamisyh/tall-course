@@ -9,5 +9,5 @@ class Series extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'description', 'author_id', 'slug'];
+    protected $guarded = [];
 }

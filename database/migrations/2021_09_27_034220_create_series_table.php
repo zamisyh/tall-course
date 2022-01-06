@@ -19,6 +19,10 @@ class CreateSeriesTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('description');
+            $table->text('short_description');
+            $table->text('requirements');
+            $table->text('course_for');
+            $table->text('language');
             $table->text('image');
             $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
 

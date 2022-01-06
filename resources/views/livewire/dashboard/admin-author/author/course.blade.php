@@ -49,38 +49,91 @@
                 <div>
                     <label x-on:click='$wire.clearForm' for="my-modal-2" class="mb-4 btn btn-primary modal-button">Create Series</label>
                     <input type="checkbox" id="my-modal-2" class="modal-toggle">
-                    <div class="modal">
+                    <div class="overflow-x-scroll modal">
                         <div class="modal-box">
                             <div class="title-modal">
                                 <h2 class="mb-5 text-2xl font-bold">Create New Series</h2>
                             </div>
-                            <div class="form-control">
-                                <label class="mb-1 text-md">Title</label>
-                                <input wire:model='title' type="text" class="w-full input input-bordered @error('title')
-                                        input-error
-                                @enderror" placeholder="Input your name">
-                                @error('title')
-                                    <span class="text-red-700">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-control">
-                                <label class="mb-1 text-md">Description</label>
-                                <textarea rows="5" cols="5" wire:model='description' class="w-full textarea textarea-bordered @error('description')
-                                        textarea-error
-                                @enderror" placeholder="Input your name"></textarea>
-                                @error('description')
-                                    <span class="text-red-700">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-control">
-                                <label class="mb-1 text-md">Image</label>
-                                <input wire:model='image' type="file" class="w-full @error('image')
-                                        input-error
-                                @enderror" placeholder="Input your name">
-                                @error('image')
-                                    <span class="text-red-700">{{ $message }}</span>
-                                @enderror
-                            </div>
+                            @if (!$isOpenDetailForm)
+                                <div class="form-control">
+                                    <label class="mb-1 text-md">Judul</label>
+                                    <input wire:model='title' type="text" class="w-full input input-bordered @error('title')
+                                            input-error
+                                    @enderror" placeholder="Input your name">
+                                    @error('title')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-2 form-control">
+                                    <label class="mb-1 text-md">Persyaratan</label>
+                                    <textarea rows="1" cols="1" wire:model='requirements' class="w-full textarea textarea-bordered @error('requirements')
+                                            textarea-error
+                                    @enderror" placeholder="Input your requirements"></textarea>
+                                    @error('requirements')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-2 form-control">
+                                    <label class="mb-1 text-md">Untuk Siapa Kursus Ini ?</label>
+                                    <textarea rows="1" cols="1" wire:model='course_for' class="w-full textarea textarea-bordered @error('course_for')
+                                            textarea-error
+                                    @enderror" placeholder="Input your course for"></textarea>
+                                    @error('course_for')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-2 form-control">
+                                    <label class="mb-1 text-md">Bahasa Yang Digunakan</label>
+                                    <select wire:model='language' class="w-full select select-bordered @error('language')
+                                            select-error
+                                    @enderror">
+                                        <option value="">Choose</option>
+                                        <option value="Indonesia">Indonesia</option>
+                                        <option value="Inggris">Inggris</option>
+                                        <option value="Rusia">Rusia</option>
+                                        <option value="China">China</option>
+                                        <option value="India">India</option>
+                                        <option value="Japan">Japan</option>
+                                    </select>
+                                    @error('language')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-3 mb-2">
+                                    <span wire:click='$set("isOpenDetailForm", true)' class="text-primary" role="button">Show More</span>
+                                </div>
+                            @else
+                                <div class="mt-2 form-control">
+                                    <label class="mb-1 text-md">Deskripsi Singkat</label>
+                                    <textarea rows="2" cols="2" wire:model='short_description' class="w-full textarea textarea-bordered @error('short_description')
+                                            textarea-error
+                                    @enderror" placeholder="Input your short description"></textarea>
+                                    @error('short_description')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-2 form-control">
+                                    <label class="mb-1 text-md">Deskripsi</label>
+                                    <textarea rows="5" cols="5" wire:model='description' class="w-full textarea textarea-bordered @error('description')
+                                            textarea-error
+                                    @enderror" placeholder="Input your description"></textarea>
+                                    @error('description')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-2 form-control">
+                                    <label class="mb-1 text-md">Gambar</label>
+                                    <input wire:model='image' type="file" class="w-full @error('image')
+                                            input-error
+                                    @enderror" placeholder="Input your description">
+                                    @error('image')
+                                        <span class="text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mt-3 mb-2">
+                                    <span wire:click='$set("isOpenDetailForm", false)' class="text-primary" role="button">Close</span>
+                                </div>
+                            @endif
                             <div class="modal-action">
                                 <label wire:loading.remove wire:click='saveSeries' class="btn btn-primary">Save</label>
                                 <label wire:loading wire:target='saveSeries' class="btn btn-primary" disabled>Saving..</label>
@@ -124,44 +177,97 @@
                                               </svg>
                                         </label>
                                         <input type="checkbox" id="editSeries({{ $item->id }})" class="modal-toggle">
-                                        <div class="modal {{ $closeModal ? 'hidden' : '' }}">
+                                        <div class="modal  {{ $closeModal ? 'hidden' : '' }}">
                                             <div class="modal-box">
                                                 <div class="title-modal">
                                                     <h2 class="mb-5 text-2xl font-bold">Edit Series </h2>
                                                 </div>
-                                                <div class="form-control">
-                                                    <label class="mb-1 text-md">Title</label>
-                                                    <input wire:model='title' type="text" class="w-full input input-bordered @error('title')
-                                                            input-error
-                                                    @enderror" placeholder="Input your title">
-                                                    @error('title')
-                                                        <span class="text-red-700">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="mt-2 form-control">
-                                                    <label class="mb-1 text-md">Description</label>
-                                                    <textarea rows="3" wire:model='description' type="text" class="w-full textarea textarea-bordered @error('description')
-                                                            textarea-error
-                                                    @enderror" placeholder="Input your description"></textarea>
-                                                    @error('description')
-                                                        <span class="text-red-700">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="mt-3 form-control">
-                                                    <label class="mb-1 text-md">Image</label>
-                                                    <input wire:model='img' type="file" class="w-full @error('img')
-                                                            input-error
-                                                    @enderror" placeholder="Input your img">
-                                                    @error('img')
-                                                        <span class="text-red-700">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                                <div class="mt-2 form-control">
-                                                    <img height="100px" width="100px" src="{{ asset('storage/images/course/thumbnail/' . $image) }}" alt="">
-                                                </div>
+                                                @if (!$isOpenDetailForm)
+                                                    <div class="form-control">
+                                                        <label class="mb-1 text-md">Judul</label>
+                                                        <input wire:model='title' type="text" class="w-full input input-bordered @error('title')
+                                                                input-error
+                                                        @enderror" placeholder="Input your name">
+                                                        @error('title')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mt-2 form-control">
+                                                        <label class="mb-1 text-md">Persyaratan</label>
+                                                        <textarea rows="1" cols="1" wire:model='requirements' class="w-full textarea textarea-bordered @error('requirements')
+                                                                textarea-error
+                                                        @enderror" placeholder="Input your requirements"></textarea>
+                                                        @error('requirements')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mt-2 form-control">
+                                                        <label class="mb-1 text-md">Untuk Siapa Kursus Ini ?</label>
+                                                        <textarea rows="1" cols="1" wire:model='course_for' class="w-full textarea textarea-bordered @error('course_for')
+                                                                textarea-error
+                                                        @enderror" placeholder="Input your course for"></textarea>
+                                                        @error('course_for')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mt-2 form-control">
+                                                        <label class="mb-1 text-md">Bahasa Yang Digunakan</label>
+                                                        <select wire:model='language' class="w-full select select-bordered @error('language')
+                                                                select-error
+                                                        @enderror">
+                                                            <option value="">Choose</option>
+                                                            <option value="Indonesia">Indonesia</option>
+                                                            <option value="Inggris">Inggris</option>
+                                                            <option value="Rusia">Rusia</option>
+                                                            <option value="China">China</option>
+                                                            <option value="India">India</option>
+                                                            <option value="Japan">Japan</option>
+                                                        </select>
+                                                        @error('language')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mt-3 mb-2">
+                                                        <span wire:click='$set("isOpenDetailForm", true)' class="text-primary" role="button">Show More</span>
+                                                    </div>
+                                                @else
+                                                    <div class="mt-2 form-control">
+                                                        <label class="mb-1 text-md">Deskripsi Singkat</label>
+                                                        <textarea rows="2" cols="2" wire:model='short_description' class="w-full textarea textarea-bordered @error('short_description')
+                                                                textarea-error
+                                                        @enderror" placeholder="Input your short description"></textarea>
+                                                        @error('short_description')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mt-2 form-control">
+                                                        <label class="mb-1 text-md">Deskripsi</label>
+                                                        <textarea rows="5" cols="5" wire:model='description' class="w-full textarea textarea-bordered @error('description')
+                                                                textarea-error
+                                                        @enderror" placeholder="Input your description"></textarea>
+                                                        @error('description')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mt-3 form-control">
+                                                        <label class="mb-1 text-md">Gambar</label>
+                                                        <input wire:model='img' type="file" class="w-full @error('img')
+                                                                input-error
+                                                        @enderror" placeholder="Input your img">
+                                                        @error('img')
+                                                            <span class="text-red-700">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="mt-2 form-control">
+                                                        <img height="100px" width="100px" src="{{ asset('storage/images/course/thumbnail/' . $image) }}" alt="">
+                                                    </div>
+                                                @endif
+
+
                                                 <div class="modal-action">
                                                     <label wire:click='updateSeries({{ $item->id }})' class="btn btn-primary">Accept</label>
-                                                    <label for="editSeries({{ $item->id }})" class="btn">Close</label>
+                                                    <label wire:click='$set("isOpenDetailForm", false)' for="editSeries({{ $item->id }})" class="btn">Close</label>
                                                 </div>
                                             </div>
                                         </div>
