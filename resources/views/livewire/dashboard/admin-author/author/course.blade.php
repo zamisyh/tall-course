@@ -39,14 +39,50 @@
                             </div>
                         @else
                             <div class="shadow-lg card bg-base-200">
-                                <div class="card-body">
+                                <div class="card-body" x-data="{ isUploading: false, progress: 0 }"
+                                x-on:livewire-upload-start="isUploading = true"
+                                x-on:livewire-upload-finish="isUploading = false"
+                                x-on:livewire-upload-error="isUploading = false"
+                                x-on:livewire-upload-progress="progress = $event.detail.progress">
                                     <h2 class="my-4 font-bold text-1xl card-title">Tambah Episode</h2>
-                                    <select wire:model='section' class="w-full select select-bordered">
-                                        <option value="">Choose Section</option>
-                                        @foreach ($data_section as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="form-control">
+                                        <select wire:model='section' class="w-full select select-bordered @error('section')
+                                            select-error
+                                        @enderror">
+                                            <option value="">Choose Section</option>
+                                            @foreach ($data_section as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('section')
+                                            <span class="text-error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mt-2 form-control">
+                                        <input wire:model='title_description' type="text" class="w-full input input-bordered @error('title_description')
+                                            input-error
+                                        @enderror" placeholder="Input your title">
+                                        @error('title_description')
+                                            <span class="text-error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="mt-2 form-control">
+                                        <input wire:model='link' type="file" class="w-full @error('link')
+                                            input-error
+                                        @enderror" placeholder="Input your title">
+                                        @error('link')
+                                            <span class="text-error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div style="max-width: 19%" x-show='isUploading'>
+                                        <progress class="progress progress-success" x-bind:value="progress" max="100"></progress>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <button wire:click='saveEpisode' wire:loading.remove class="btn btn-primary">Save</button>
+                                        <button wire:loading wire:target='saveEpisode' class="btn btn-primary" disabled>Saving..</button>
+                                    </div>
 
                                     <div class="mt-3 mb-2">
                                         <span wire:click='$set("isOpenFormAddSection", true)' class="text-primary" role="button">Add Section</span>
@@ -62,16 +98,29 @@
                                 Description : {{ $data_series->short_description }}
                                 <h2 class="mt-4 mb-4 font-bold">Detail Episode :</h2>
 
-                                @foreach ($data_section as $item)
+                                @foreach ($data_section as $key => $item)
                                     <div tabindex="0" class="w-full border collapse rounded-box border-base-300 collapse-arrow">
                                         <div class="text-xl font-medium collapse-title">
                                             {{ $item->name }}
                                         </div>
                                         <div class="collapse-content">
-                                        <p>Collapse content reveals with focus. If you add a checkbox, you can control it using checkbox instead of focus. Or you can force-open/force-close using
-                                            <span class="badge badge-outline">collapse-open</span> and
-                                            <span class="badge badge-outline">collapse-close</span> classes.
-                                        </p>
+                                            <ul>
+                                                @foreach ($data_series->episode as $d)
+                                                    <li>
+                                                        {{-- <video width="300" height="150">
+                                                            <source src="{{ asset('storage/vidio/course/' . $d->link) }}" type="video/mp4" />
+                                                        </video> --}}
+
+                                                        @if ($item->id == $d->section)
+
+                                                            <a href="/course/vidio/{{ $data_series->id }}/{{ $d->title_slug }}" class="text-info">{{ $d->description }}</a>
+
+                                                        @endif
+
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+
                                         </div>
                                     </div>
                                 @endforeach
@@ -83,7 +132,7 @@
                     <div>
                        <div class="flex">
                         <input wire:model='search' type="text" class="mb-4 input input-bordered" placeholder="Searching..">
-                        <div wire:loading wire:target='search' class="w-12 h-12 ml-5 border-t-2 border-b-2 border-purple-500 rounded-full animate-spin"></div>
+                        <div wire:loading wire:target='search' class="w-12 h-12 ml-5 border-t-2 border-purple-500 rounded-full border-b-2g animate-spin"></div>
 
                     </div>
 
