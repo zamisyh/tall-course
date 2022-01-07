@@ -16,6 +16,7 @@ class CreateEpisodesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('series_id');
             $table->text('description');
+            $table->text('title_slug');
             $table->string('link');
             $table->string('time');
             $table->string('section');
