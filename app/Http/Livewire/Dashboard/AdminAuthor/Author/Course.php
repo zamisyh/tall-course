@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dashboard\AdminAuthor\Author;
 
 use App\Models\Author;
+use App\Models\Episode;
 use App\Models\Section;
 use App\Models\Series;
 use Livewire\Component;
@@ -24,7 +25,7 @@ class Course extends Component
 
     protected $listeners = [
         'confirmed', 'canceled',
-        'sectionAdded'
+        'sectionAdded', 'episodeAdded'
     ];
 
     public $isSaved, $rows = 5, $search, $isOpenDetailForm, $isOpenAddEpisode;
@@ -33,6 +34,7 @@ class Course extends Component
 
     //episodes
     public $isOpenFormAddSection, $data_section, $data_series, $form_add_new_section;
+    public $link, $title_description, $section;
 
 
     public function mount()
@@ -212,7 +214,7 @@ class Course extends Component
     public function editEpisode($id)
     {
         $this->isOpenAddEpisode = true;
-        $this->data_series = Series::findOrFail($id);
+        $this->data_series = Series::where('id', $id)->with('episode')->first();
         $this->dynamicSection();
 
     }
@@ -227,6 +229,59 @@ class Course extends Component
     {
         $this->dynamicSection();
     }
+
+
+
+
+    public function updatedLink()
+    {
+        $this->validate([
+            'link' => 'file|mimes:mp4,mkv,avi,wmv,webm,mpg'
+        ]);
+    }
+
+    public function saveEpisode()
+    {
+        $this->validate([
+            'section' => 'required',
+            'title_description' => 'required',
+            'link' => 'required'
+        ]);
+
+        try {
+
+            $namaFile =  Str::slug(strtolower($this->title_description)). '-' . time(). '.'. $this->link->getClientOriginalExtension();
+            $path = 'public/vidio/course';
+
+            $this->link->storeAs($path, $namaFile);
+
+            $getID3 = new \getID3;
+            $file = $getID3->analyze(public_path('storage/vidio/course/' .  $namaFile));
+
+            Episode::create([
+                'series_id' => $this->data_series->id,
+                'description' => $this->title_description,
+                'time' => $file['playtime_seconds'],
+                'section' => $this->section,
+                'title_slug' => Str::slug(strtolower($this->title_description)),
+                'link' => $namaFile
+            ]);
+
+            $this->alert(
+                'success',
+                'Succesfully create episode'
+            );
+
+            $this->emitSelf('episodeAdded');
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+    }
+
+    public function episodeAdded(){}
+
 
 
 }
