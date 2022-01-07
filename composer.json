@@ -9,6 +9,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "imanghafoori/laravel-video": "^2.1",
+        "james-heinrich/getid3": "^1.9",
         "jantinnerezo/livewire-alert": "^2.1",
         "laravel-frontend-presets/tall": "^4.0",
         "laravel/framework": "^8.54",
