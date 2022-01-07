@@ -13,11 +13,13 @@ use App\Http\Livewire\Dashboard\AdminAuthor\Admin\Author;
 use App\Http\Livewire\Dashboard\AdminAuthor\Author\Course;
 use App\Http\Livewire\Dashboard\AdminAuthor\Author\Profile;
 use App\Http\Livewire\Dashboard\Settings;
+use App\Http\Livewire\ShowCourse;
 use Iman\Streamer\VideoStreamer;
 
 
 use App\Http\Livewire\Tes;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Echo_;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,13 +30,19 @@ use Illuminate\Support\Facades\Auth;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
+
 */
+
+
+
 
 Route::name('client.')->group(function() {
     Route::get('/', Home::class)->name('home');
     Route::get('series', Series::class)->name('series');
     Route::get('topics', Topics::class)->name('topics');
     Route::get('popular', Popular::class)->name('popular');
+    Route::get('course/vidio/{id}/{slug}', ShowCourse::class)->name('get-vidio');
 
     Route::prefix('auth')->group(function () {
         Route::name('auth.')->group(function() {
@@ -45,7 +53,6 @@ Route::name('client.')->group(function() {
 });
 
 Route::prefix('dashboard')->group(function () {
-
     Route::prefix('admin')->group(function () {
         Route::name('dashboard.admin.')->group(function() {
             Route::middleware(['role:admin|author'])->group(function () {
